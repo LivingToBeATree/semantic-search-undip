@@ -7,9 +7,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu \
+    && pip install --no-cache-dir -r requirements.txt
 
-COPY backend_example.py .
+COPY backend.py .
 
 RUN mkdir -p /app/eprints_vector_db /model-cache \
     && useradd --create-home --uid 10001 app \

@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 
 import chromadb
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from sentence_transformers import SentenceTransformer
 
@@ -24,6 +25,14 @@ app = FastAPI(
     description="Semantic search over the harvested Undip eprints repository.",
     version="1.0.0",
     lifespan=lifespan,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_credentials=True,
+    allow_methods=["POST"],
+    allow_headers=["Content-Type"],
 )
 
 
